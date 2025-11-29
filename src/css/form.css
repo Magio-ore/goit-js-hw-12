@@ -4,7 +4,7 @@
     padding: 20px;
 }
 
-input{
+.search-input{
     width: 272px;
     height: 40px;
     margin-right: 10px;
@@ -16,12 +16,12 @@ input{
     border-radius: 4px;
 }
 
-input:hover{
+.search-input:hover{
     border: 1px solid #000;
     border-radius: 4px;
 }
 
-input:focus{
+.search-input:focus{
     border: 1px solid #4e75ff;
     border-radius: 4px;
     font: 400 16px / 1.5 "Montserrat", sans-serif;
@@ -30,7 +30,7 @@ input:focus{
     outline: none;
 }
 
-button{
+.search-button{
     border-radius: 8px;
     max-width: 75px;
     max-height: 40px;
@@ -45,7 +45,7 @@ button{
     cursor: pointer;
 }
 
-button:hover{
+.search-button:hover{
     background: #6c8cff;
     border: none;
 }
