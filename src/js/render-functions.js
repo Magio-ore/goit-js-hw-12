@@ -1,5 +1,7 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
 const gallery = document.querySelector('.gallery');
 let lightbox;
@@ -113,4 +115,46 @@ export function hideEndMessage() {
   if (endMessage) {
     endMessage.style.display = 'none';
   }
+}
+
+export function showEndOfResultsNotification() {
+  hideLoadMoreButton();
+  showEndMessage();
+  iziToast.info({
+    title: 'Info',
+    message: "We're sorry, but you've reached the end of search results.",
+    position: 'topRight',
+  });
+}
+
+export function showEmptyQueryError() {
+  iziToast.warning({
+    title: 'Warning',
+    message: 'Please enter a search query.',
+    position: 'topRight',
+  });
+}
+
+export function scrollToNewImages(itemsBeforeCount) {
+  const gallery = document.querySelector('.gallery');
+  if (!gallery) return;
+
+  const galleryItemsBefore = itemsBeforeCount || 0;
+  const newItems = gallery.querySelectorAll('.gallery-item');
+  
+  if (newItems.length > galleryItemsBefore) {
+    const firstNewItem = newItems[galleryItemsBefore];
+    const rect = firstNewItem.getBoundingClientRect();
+    const cardHeight = rect.height;
+    
+    window.scrollBy({
+      top: cardHeight * 2,
+      behavior: 'smooth',
+    });
+  }
+}
+
+export function getGalleryItemsCount() {
+  const gallery = document.querySelector('.gallery');
+  return gallery ? gallery.querySelectorAll('.gallery-item').length : 0;
 }

@@ -8,6 +8,10 @@ import {
   hideLoadMoreButton,
   showEndMessage,
   hideEndMessage,
+  showEndOfResultsNotification,
+  showEmptyQueryError,
+  scrollToNewImages,
+  getGalleryItemsCount,
 } from './js/render-functions.js';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
@@ -68,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const query = searchInput.value.trim();
 
     if (!query) {
+      showEmptyQueryError();
       return;
     }
 
@@ -85,16 +90,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (currentPage < totalPages) {
         showLoadMoreButton();
       } else {
-        showEndMessage();
+        showEndOfResultsNotification();
       }
     }
   };
 
   const handleLoadMore = async () => {
-    const gallery = document.querySelector('.gallery');
-    const galleryItemsBefore = gallery
-      ? gallery.querySelectorAll('.gallery-item').length
-      : 0;
+    const galleryItemsBefore = getGalleryItemsCount();
 
     currentPage += 1;
 
@@ -102,22 +104,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (result) {
       if (currentPage >= totalPages) {
-        hideLoadMoreButton();
-        showEndMessage();
+        showEndOfResultsNotification();
       }
 
-      if (gallery && galleryItemsBefore > 0) {
-        const newItems = gallery.querySelectorAll('.gallery-item');
-        if (newItems.length > galleryItemsBefore) {
-          const firstNewItem = newItems[galleryItemsBefore];
-          const rect = firstNewItem.getBoundingClientRect();
-          const cardHeight = rect.height;
-          
-          window.scrollBy({
-            top: cardHeight * 2,
-            behavior: 'smooth',
-          });
-        }
+      if (galleryItemsBefore > 0) {
+        scrollToNewImages(galleryItemsBefore);
       }
     }
   };
