@@ -111,10 +111,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (newItems.length > galleryItemsBefore) {
           const firstNewItem = newItems[galleryItemsBefore];
           const rect = firstNewItem.getBoundingClientRect();
-          const scrollOffset = window.innerHeight * 0.4;
+          const cardHeight = rect.height;
           
           window.scrollBy({
-            top: rect.top - scrollOffset,
+            top: cardHeight * 2,
             behavior: 'smooth',
           });
         }
