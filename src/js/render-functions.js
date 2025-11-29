@@ -17,6 +17,11 @@ export function clearGallery() {
   if (gallery) {
     gallery.innerHTML = '';
   }
+  
+  if (lightbox) {
+    lightbox.destroy();
+    lightbox = null;
+  }
 }
 
 export function createGallery(images) {
@@ -75,7 +80,6 @@ export function showLoader() {
   }
 }
 
-// Приховати індикатор завантаження
 export function hideLoader() {
   const loader = document.querySelector('.loader');
   if (loader) {
@@ -83,3 +87,30 @@ export function hideLoader() {
   }
 }
 
+export function showLoadMoreButton() {
+  const loadMoreBtn = document.querySelector('.load-more-btn');
+  if (loadMoreBtn) {
+    loadMoreBtn.style.display = 'block';
+  }
+}
+
+export function hideLoadMoreButton() {
+  const loadMoreBtn = document.querySelector('.load-more-btn');
+  if (loadMoreBtn) {
+    loadMoreBtn.style.display = 'none';
+  }
+}
+
+export function showEndMessage() {
+  const endMessage = document.querySelector('.end-message');
+  if (endMessage) {
+    endMessage.style.display = 'block';
+  }
+}
+
+export function hideEndMessage() {
+  const endMessage = document.querySelector('.end-message');
+  if (endMessage) {
+    endMessage.style.display = 'none';
+  }
+}

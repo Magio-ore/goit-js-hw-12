@@ -9,7 +9,7 @@ export const getImagesByQuery = async (query, page = 1) => {
     orientation: 'horizontal',
     safesearch: 'true',
     page: page.toString(),
-    per_page: '40',
+    per_page: '15',
   });
 
   const response = await fetch(`${BASE_URL}?${params}`);
