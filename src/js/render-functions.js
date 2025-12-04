@@ -142,15 +142,19 @@ export function scrollToNewImages(itemsBeforeCount) {
   const galleryItemsBefore = itemsBeforeCount || 0;
   const newItems = gallery.querySelectorAll('.gallery-item');
   
-  if (newItems.length > galleryItemsBefore) {
+  if (newItems.length > galleryItemsBefore && newItems.length > 0) {
     const firstNewItem = newItems[galleryItemsBefore];
-    const rect = firstNewItem.getBoundingClientRect();
-    const cardHeight = rect.height;
-    
-    window.scrollBy({
-      top: cardHeight * 2,
-      behavior: 'smooth',
-    });
+    if (firstNewItem) {
+      const rect = firstNewItem.getBoundingClientRect();
+      const cardHeight = rect.height;
+      
+      if (cardHeight > 0) {
+        window.scrollBy({
+          top: cardHeight * 2,
+          behavior: 'smooth',
+        });
+      }
+    }
   }
 }
 

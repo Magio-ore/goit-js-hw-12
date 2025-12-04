@@ -30,8 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
       showLoader();
       const data = await getImagesByQuery(query, page);
 
-      hideLoader();
-
       if (!data.hits || data.hits.length === 0) {
         if (page === 1) {
           iziToast.error({
@@ -55,7 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
         totalPages,
       };
     } catch (error) {
-      hideLoader();
       iziToast.error({
         title: 'Error',
         message: 'Failed to fetch images. Please try again later.',
@@ -63,6 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       console.error('Error fetching images:', error);
       return null;
+    } finally {
+      hideLoader();
     }
   };
 
@@ -96,8 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const handleLoadMore = async () => {
+    hideLoadMoreButton();
+    
     const galleryItemsBefore = getGalleryItemsCount();
-
     currentPage += 1;
 
     const result = await loadImages(currentQuery, currentPage);
@@ -105,11 +105,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (result) {
       if (currentPage >= totalPages) {
         showEndOfResultsNotification();
+      } else {
+        showLoadMoreButton();
       }
 
       if (galleryItemsBefore > 0) {
         scrollToNewImages(galleryItemsBefore);
       }
+    } else {
+      showLoadMoreButton();
     }
   };
 
